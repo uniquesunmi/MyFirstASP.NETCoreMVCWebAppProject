@@ -5,10 +5,15 @@ namespace FinanceApp.Controllers
 {
     public class ExpensesController1 : Controller
     {
-        private readonly FinanceAppContext _
+        private readonly FinanceAppContext _context;
+        public ExpensesController1(FinanceAppContext context)
+        {
+            _context = context;
+        }
         public IActionResult Index()
         {
-            return View();
+            var expenses = _context.Expenses.ToList();
+            return View(expenses);
         }
     }
 }
