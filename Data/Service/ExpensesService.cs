@@ -1,14 +1,15 @@
 ﻿using FinanceApp.Models;
 using Microsoft.EntityFrameworkCore;
+using FinanceApp.Data.Service;
 
 namespace FinanceApp.Data;
 
 public class ExpensesService : IExpensesService
 {
 
-    private readonly Data.ExpensesService _context;
+    private readonly FinanceAppDbContext _context;
 
-    public ExpensesService(Data.IExpensesService  context) 
+    public ExpensesService(FinanceAppDbContext context) 
     {
         _context = context;
     }
@@ -36,5 +37,19 @@ public class ExpensesService : IExpensesService
             _context.Expenses.Remove(expense);
             await _context.SaveChangesAsync();
         }
+    }
+
+    public IQueryable GetChartData()
+    {
+        var data = _context.Expenses
+                          .GroupBy(e => e.Category)
+                          .Select(g => new
+                          {
+                              Category = g.Key,
+                              Total = g.Sum(e => e.Amount)
+
+                          });
+
+        return data; 
     }
 }
