@@ -3,9 +3,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FinanceApp.Data
 {
-    public class FinanceAppContext: DbContext
+    public class FinanceAppDbContext: DbContext
     {
-     public  FinanceAppContext(DbContextOptions<FinanceAppContext>options):base(options){ }
+     public  FinanceAppDbContext(DbContextOptions<FinanceAppDbContext> options):base(options){ }
 
 
 
